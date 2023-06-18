@@ -1,20 +1,23 @@
-import { useState, useEffect } from "react";
-import { View, ScrollView, SafeAreaView, Text } from "react-native";
-import proizvodi from "../litsaProizvoda/proizvodi"
 
 import { Stack, useRouter } from "expo-router";
-;
+import {  View, SafeAreaView,  TextInput, ScrollView } from "react-native";
+import {  useState, useEffect } from "react";
+import { COLORS, icons, SIZES } from "../../constants";
 
-import styles from './pocetna.style'
-import { COLORS, icons,  SIZES } from '../constants';
-import { Prikaz, ScreenHeaderBtn } from "../components"; 
+import { ScreenHeaderBtn } from "../../components";
+
+import styles from "../pocetna.style";
+import proizvodi from "../../litsaProizvoda/proizvodi";
+import {Prikaz} from "../../components";
 
 
 
+const Search = () => {
+    
 
-const Home = () => {
-
+    
     const router = useRouter();
+
     const [search, setSearch] = useState("");
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
@@ -25,6 +28,7 @@ const Home = () => {
       }, []);
 
     const searchFilterFunction = (text) => {
+
         if (text) {
           const newData = masterDataSource.filter(function (item) {
             const itemData = item.naziv
@@ -43,38 +47,52 @@ const Home = () => {
 
 
 
+
+
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>
-            <Stack.Screen options={{headerStyle: { backgroundColor:COLORS.lightWhite },
+            <Stack.Screen options={{headerStyle: {backgroundColor: COLORS.lightWhite},
         headerShadowVisible: false,
-        headerRight: () => (
-            <ScreenHeaderBtn iconUrl = {icons.search} style={styles.searchBtn} dimension ="100%" handlePress={() => router.push({pathname: "/detalji/search"})}/>
+        headerBackVisible: false,
+        headerLeft: () => (
+            <ScreenHeaderBtn
+            iconUrl={icons.left}
+            dimension="100%"
+            handlePress={() => router.back()}
+            />
         ),
-        headerTitle: ""
-        }}
-        />
-
+        headerTitle: "Povratak"
+        }}/>
+        <>
         <ScrollView showsVerticalScrollIndicator={false}>
             <View 
             style={{
                 flex: 1, 
                 padding: SIZES.medium}}>
-                    <View>
-                        <View style={styles.container}>
-                        <Text style={styles.headerTitle}>Dobar dan, Tonio!</Text>
-                        <Text style={styles.welcomeMessage}>Pregledaj sve proizvode</Text>
-                        </View></View>
                     
+                    <View style={styles.container}>
+                    
+                    <View style={styles.searchContainer}>
+                    <View style={styles.searchWrapper}>
+                    <TextInput 
+                    style={styles.searchInput}
+                    value={search}
+                    onChangeText={(text) => {searchFilterFunction(text)}}
+                    placeholder='Pretraži proizvode'
+                    />     
+                    
+        </View> 
+      </View>
+      <Prikaz poslaniPodatci={filteredDataSource}/>
+            </View>
                     
             </View>
-                    <Prikaz poslaniPodatci={filteredDataSource}/>
-                    
-                    
             
         </ScrollView>
-
+        </>
         </SafeAreaView>
+        
     )
 }
 
-export default Home;
+export default Search;
