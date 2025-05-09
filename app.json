@@ -5,6 +5,9 @@
       "bundler": "metro"
     },
     "name": "brisanje",
-    "slug": "brisanje"
+    "slug": "brisanje",
+    "android": {
+      "package": "com.anonymous.brisanje"
+    }
   }
 }

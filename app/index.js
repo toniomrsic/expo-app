@@ -15,7 +15,6 @@ import { Prikaz, ScreenHeaderBtn } from "../components";
 const Home = () => {
 
     const router = useRouter();
-    const [search, setSearch] = useState("");
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
 
@@ -24,22 +23,7 @@ const Home = () => {
         setMasterDataSource(proizvodi);
       }, []);
 
-    const searchFilterFunction = (text) => {
-        if (text) {
-          const newData = masterDataSource.filter(function (item) {
-            const itemData = item.naziv
-              ? item.naziv.toUpperCase()
-              : ''.toUpperCase();
-            const textData = text.toUpperCase();
-            return itemData.indexOf(textData) > -1;
-          });
-          setFilteredDataSource(newData);
-          setSearch(text);
-        } else {
-          setFilteredDataSource(masterDataSource);
-          setSearch(text);
-        }
-      };
+    
 
 
 
